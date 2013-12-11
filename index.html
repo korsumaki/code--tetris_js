@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head> 
+		<meta charset="ISO-8859-1">
+		<title>code::tetris_js</title> 
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+		<!--link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+		<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script-->
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.css" />
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js"></script>
+
+		<script src="scripts/main.js" ></script>
+	</head> 
+
+<body> <!-- onload="onLoad()" -->
+	<div data-role="page" id="page-main"> 
+		<div data-role="header" data-position="inline">
+			<!--button id="updateCurrentLocationButton" onclick="updateCurrentLocation()" data-icon="refresh">Sijainti</button-->
+			<h1>code::tetris_js</h1>
+			<!--a href="#page-plan-settings" data-icon="gear" class="ui-btn-right">Perustiedot</a-->
+		</div> 
+
+		<div data-role="content">
+
+			<div class="ui-grid-a">
+				<div class="ui-block-a"><div class="ui-bar " >
+					<canvas id="playFieldCanvas" width="400" height="800" style="border:1px solid #000000;"></canvas>
+				</div></div>
+				<div class="ui-block-b"><div class="ui-bar " >
+
+					<!--div data-role="collapsible-set" data-inset="false">
+						<div data-role="collapsible" data-collapsed="false">
+							<h3>Block 1</h3>
+							<div data-role="fieldcontain">
+								<textarea name="" id="textarea1" placeholder="" data-inset="false">// Code here</textarea>
+							</div>
+						</div>
+						<div data-role="collapsible" data-collapsed="false">
+							<h3>Block 1</h3>
+							<div data-role="fieldcontain">
+								<textarea name="" id="textarea1" placeholder="" data-inset="false">// Code here</textarea>
+							</div>
+						</div>
+						<div data-role="collapsible" data-collapsed="false">
+							<h3>Block 1</h3>
+							<div data-role="fieldcontain">
+								<textarea name="" id="textarea1" placeholder="" data-inset="false">// Code here</textarea>
+							</div>
+						</div>
+					</div-->
+
+					<div data-role="collapsible-set" >
+					    <div data-role="collapsible">
+					        <h3>"I"</h3>
+							<textarea cols="40" rows="10" id="codeA" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"J"</h3>
+							<textarea cols="40" rows="10" id="codeB1" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"L"</h3>
+							<textarea cols="40" rows="10" id="codeB2" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"O"</h3>
+							<textarea cols="40" rows="10" id="codeC" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"S"</h3>
+							<textarea cols="40" rows="10" id="codeD1" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"T"</h3>
+							<textarea cols="40" rows="10" id="codeE" ></textarea>
+					    </div>
+					    <div data-role="collapsible">
+					        <h3>"Z"</h3>
+							<textarea cols="40" rows="10" id="codeD2" ></textarea>
+					    </div>
+					</div>
+					
+					<!--div data-role="navbar">
+					    <ul>
+					        <li><a href="#">Block A</a></li>
+					        <li><a href="#">Block B</a></li>
+					        <li><a href="#">Block C</a></li>
+					    </ul>
+					</div--><!-- /navbar -->
+					<!--div data-role="tab">
+						<div>
+						<label for="codeWindow">Code:</label>
+						<textarea cols="40" rows="10" name="codeWindow" id="codeWindow" ></textarea>
+						</div>
+					</div--><!-- /navbar -->
+
+					<!--label for="codeWindow">Code:</label-->
+					<textarea cols="40" rows="10" name="codeWindow" id="codeWindow" ></textarea>
+					<button onclick="onRunCodeButton()">Save code</button>
+
+					<h3>API methods</h3>
+					<p><code>
+						getWidth();  // Get width of playfield<br>
+						getHeight(col); // Get height of column 'col'<br>
+						getLowestColumn(); // Get column number of lowest column<br>
+						rotate(rot); // Rotate to position 'rot' (0-3)<br>
+						move(col);   // Move to column 'col'<br>
+						drop();      // Drop block down faster<br>
+					</code></p>
+
+					<h3>Log</h3>
+					<p id="logWindow"></p>
+				</div></div>
+			</div><!-- /grid-a -->
+
+		</div><!-- content -->
+
+	</div>
+
+</body>
+</html>
