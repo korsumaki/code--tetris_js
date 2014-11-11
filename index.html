@@ -12,7 +12,27 @@
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.4.0-rc.1/jquery.mobile-1.4.0-rc.1.min.js"></script>
 
+		<script type="text/javascript" src="scripts/blockly_compressed.js"></script>
+		<script src="scripts/javascript_compressed.js"></script>
+		
+		<script type="text/javascript" src="scripts/blocks_compressed.js"></script>
+		<script type="text/javascript" src="scripts/msg/js/en.js"></script>
+		<!--script type="text/javascript" src="scripts/msg/js/fi.js"></script-->
+
+
 		<script src="scripts/main.js" ></script>
+
+		<!--style>
+			body {
+				background-color: #fff;
+				font-family: sans-serif;
+			}
+			h1 {
+				font-weight: normal;
+				font-size: 100%;
+			}
+		</style-->
+
 	</head> 
 
 <body> <!-- onload="onLoad()" -->
@@ -52,7 +72,7 @@
 						</div>
 					</div-->
 
-					<div data-role="collapsible-set" >
+					<!--div data-role="collapsible-set" >
 					    <div data-role="collapsible">
 					        <h3>"I"</h3>
 							<textarea cols="40" rows="10" id="codeA" ></textarea>
@@ -81,7 +101,7 @@
 					        <h3>"Z"</h3>
 							<textarea cols="40" rows="10" id="codeD2" ></textarea>
 					    </div>
-					</div>
+					</div-->
 					
 					<!--div data-role="navbar">
 					    <ul>
@@ -97,9 +117,83 @@
 						</div>
 					</div--><!-- /navbar -->
 
+					<div id="blocklyDiv" style="height: 480px; width: 800px;"></div>
+
+<!--xml id="toolbox" style="display: none">
+  <category name="Core">
+    <category name="Control">
+      <block type="controls_if"></block>
+      <block type="controls_whileUntil"></block>
+    </category>
+    <category name="Logic">
+      <block type="logic_compare"></block>
+      <block type="logic_operation"></block>
+      <block type="logic_boolean"></block>
+    </category>
+  </category>
+  <category name="Custom">
+    <block type="start"></block>
+    <category name="Move">
+      <block type="move_forward"></block>
+      <block type="move_backward"></block>
+    </category>
+    <category name="Turn">
+      <block type="turn_left"></block>
+      <block type="turn_right"></block>
+	<category name="Variables" custom="VARIABLE"></category>
+	<category name="Functions" custom="PROCEDURE"></category>
+    </category>
+  </category>
+</xml-->
+
+					<xml id="toolbox" style="display: none">
+					  <category name="Control">
+					    <block type="controls_if"></block>
+					    <block type="controls_whileUntil"></block>
+					    <block type="controls_for"></block>
+					  </category>
+					  <category name="Logic">
+					    <block type="logic_compare"></block>
+					    <block type="logic_operation"></block>
+					    <block type="logic_boolean"></block>
+					  </category>
+					  <category name="Math">
+						<block type="math_number"></block>
+						<block type="math_arithmetic"></block>
+					  </category>
+						<category name="Variables" custom="VARIABLE"></category>
+						<category name="Functions" custom="PROCEDURE"></category>
+					  <category name="Tetris API">
+					    <block type="api_block_start_a"></block>
+					    <block type="api_move"></block>
+					    <block type="api_rotate"></block>
+					    <block type="api_drop"></block>
+					    <block type="api_get_width"></block>
+					    <block type="api_get_height"></block>
+					    <block type="api_get_lowest_column"></block>
+					  </category>
+					</xml>
+
+					<!--xml id="toolbox" style="display: none">
+						<block type="controls_if"></block>
+						<block type="logic_compare"></block>
+						<block type="controls_whileUntil"></block>
+						<block type="math_number"></block>
+						<block type="math_arithmetic"></block>
+						<block type="text"></block>
+						<block type="text_print"></block>
+					</xml-->
+					
+					<!--script>
+						Blockly.inject(document.getElementById('blocklyDiv'),
+						{toolbox: document.getElementById('toolbox')});
+					</script-->
+
+
 					<!--label for="codeWindow">Code:</label-->
-					<textarea cols="40" rows="10" name="codeWindow" id="codeWindow" ></textarea>
+					<textarea cols="40" rows="15" name="codeWindow" id="codeWindow" ></textarea>
 					<button onclick="onRunCodeButton()">Save code</button>
+					<button onclick="onRestartButton()">Restart</button>
 
 					<h3>API methods</h3>
 					<p><code>

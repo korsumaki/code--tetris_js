@@ -50,6 +50,7 @@ Pisteillä ostettavat ominaisuudet:
  * + koodi suoritetaan palikan pudotuksessa
  *   + aluksi vain yksi koodi
  * - eri palikoille omat koodit
+ * - koodi ajetaan heti save napin painamisesta (jos koodattiin putoavalle palikalle)
  * 
  * - BUG: drop ei saa hidastua seinään osuessa
  * - BUG: pelkkä drop() ei toimi?
@@ -643,10 +644,181 @@ function gameLoop()
 	setTimeout(gameLoop, currentSpeed);
 }
 
+
+
+function blocklyUpdateFunction() {
+  var code = Blockly.JavaScript.workspaceToCode();
+  document.getElementById('codeWindow').value = code;
+}
+
+function BlocklyInit()
+{
+	Blockly.inject(document.getElementById('blocklyDiv'),
+	{toolbox: document.getElementById('toolbox')});
+	
+	Blockly.addChangeListener(blocklyUpdateFunction);
+	
+Blockly.Blocks['api_block_start_a'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(0);
+    this.appendDummyInput()
+        .appendField("Block A");
+    this.setInputsInline(true);
+    this.setNextStatement(true, "null");
+    this.setTooltip('Entry point for Block A');
+  }
+};
+Blockly.JavaScript['api_block_start_a'] = function(block) {
+  // TODO: Assemble JavaScript into code variable.
+  var code = ''; // TODO
+  return code;
+};
+	
+	
+	
+	
+Blockly.Blocks['api_get_width'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(60);
+    this.appendDummyInput()
+        .appendField("get Width");
+    this.setOutput(true, "Number");
+    this.setTooltip('Get width of playfield');
+  }
+};
+Blockly.Blocks['api_get_height'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(60);
+    this.appendValueInput("col")
+        .setCheck("Number")
+        .appendField("get Height");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setTooltip('Get height of column');
+  }
+};
+Blockly.Blocks['api_get_lowest_column'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(60);
+    this.appendDummyInput()
+        .appendField("get Lowest Column");
+    this.setOutput(true, "Number");
+    this.setTooltip('Get column number of lowest column');
+  }
+};
+Blockly.Blocks['api_move'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(20);
+    this.appendValueInput("col")
+        .setCheck("Number")
+        .appendField("move");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setTooltip('Move to column');
+  }
+};
+
+/*Blockly.Blocks['api_rotate'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(20);
+    this.appendValueInput("rot")
+        .setCheck("Number")
+        .appendField("rotate");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setTooltip('Rotate to position (0-3)');
+  }
+};*/
+
+// TODO store links from Block Factory, so that you do not need to draw those again always...
+// https://blockly-demo.appspot.com/static/demos/blockfactory/index.html
+Blockly.Blocks['api_rotate'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(20);
+    this.appendDummyInput()
+        .appendField("rotate")
+        .appendField(new Blockly.FieldDropdown([["to 0", "0"], ["to 1", "1"], ["to 2", "2"], ["to 3", "3"]]), "rot")
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, "null");
+    this.setNextStatement(true, "null");
+    this.setTooltip('Rotate to position (0-3)');
+  }
+};
+Blockly.Blocks['api_drop'] = {
+  init: function() {
+    this.setHelpUrl('http://www.example.com/');
+    this.setColour(20);
+    this.appendDummyInput()
+        .appendField("drop");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, "null");
+    this.setTooltip('Drop block down faster');
+  }
+};
+
+
+Blockly.JavaScript['api_get_width'] = function(block) {
+  var code = 'getWidth()';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['api_get_lowest_column'] = function(block) {
+  var code = 'getLowestColumn()';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['api_move'] = function(block) {
+  var value_col = Blockly.JavaScript.valueToCode(block, 'col', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = 'move( ' + value_col + ' );\n';
+  return code;
+};
+Blockly.JavaScript['api_rotate'] = function(block) {
+  //var value_rot = Blockly.JavaScript.valueToCode(block, 'rot', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_rot = block.getFieldValue('rot');
+  var code = 'rotate( ' + dropdown_rot + ' );\n';
+  //var code = 'rotate( ' + value_rot + ' );\n';
+  return code;
+};
+Blockly.JavaScript['api_get_height'] = function(block) {
+  var value_col = Blockly.JavaScript.valueToCode(block, 'col', Blockly.JavaScript.ORDER_ATOMIC);
+  var code = 'getHeight( '+ value_col +' )';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+Blockly.JavaScript['api_drop'] = function(block) {
+  var code = 'drop();';
+  return code;
+};
+
+}
+
+function onRestartButton()
+{
+	initField();
+	createBlocks();
+	
+	// get next (first) block randomly
+	currentBlock = blockArray[Math.floor(Math.random() * blockArray.length)];
+	newBlockAdded = true;
+
+	gameLoop();
+
+}
+
+
+
 $(document).ready(function() {
 	initField();
 	createBlocks();
 	initCodeWindow();
+	BlocklyInit();
+	
 	moveQueue = new Array();
 	
 	// get next (first) block randomly
